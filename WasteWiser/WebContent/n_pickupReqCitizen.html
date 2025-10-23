@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Pickup - WasteWise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #4caf50;
+            --primary-dark: #1b5e20;
+            --secondary: #ff9800;
+            --secondary-light: #ffb74d;
+            --secondary-dark: #f57c00;
+            --accent: #009688;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #f5f5f5;
+            --card-bg: #ffffff;
+            --error: #f44336;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --info: #2196f3;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: var(--text);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 12px;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 2rem 0;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Waste Type Cards */
+        .waste-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .waste-type-card {
+            border: 2px solid #eee;
+            border-radius: var(--radius);
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .waste-type-card:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .waste-type-card.selected {
+            border-color: var(--primary);
+            background-color: rgba(46, 125, 50, 0.05);
+        }
+
+        .waste-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 2rem 0 1rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo i {
+            font-size: 2rem;
+        }
+
+        .footer-logo h2 {
+            font-size: 1.5rem;
+        }
+
+        .footer-bottom {
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .waste-types {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .waste-types {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-recycle"></i>
+                        <h1>WasteWise</h1>
+                    </a>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="citizen-dashboard.html">Dashboard</a></li>
+                        <li><a href="citizen-request-pickup.html" class="active">Request Pickup</a></li>
+                        <li><a href="citizen-pickup-history.html">Pickup History</a></li>
+                    </ul>
+                </nav>
+                <div class="user-menu">
+                    <span>Welcome, John Doe</span>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">
+                            <i class="fas fa-user-circle"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="citizen-profile.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="change-password.html"><i class="fas fa-key"></i> Change Password</a>
+                            <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h2 class="page-title">Request Waste Pickup</h2>
+                <a href="citizen-dashboard.html" class="btn btn-outline">Back to Dashboard</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">New Pickup Request</h3>
+                </div>
+                <form action="submitPickupRequest" method="post">
+                    <div class="form-group">
+                        <label>Select Waste Type</label>
+                        <div class="waste-types">
+                            <div class="waste-type-card" data-type="General">
+                                <i class="fas fa-trash waste-icon"></i>
+                                <h4>General Waste</h4>
+                                <p>Household non-recyclable waste</p>
+                            </div>
+                            <div class="waste-type-card" data-type="E-Waste">
+                                <i class="fas fa-laptop waste-icon"></i>
+                                <h4>E-Waste</h4>
+                                <p>Electronic devices and components</p>
+                            </div>
+                            <div class="waste-type-card" data-type="Medical">
+                                <i class="fas fa-briefcase-medical waste-icon"></i>
+                                <h4>Medical Waste</h4>
+                                <p>Healthcare-related waste materials</p>
+                            </div>
+                            <div class="waste-type-card" data-type="Recyclable">
+                                <i class="fas fa-recycle waste-icon"></i>
+                                <h4>Recyclable</h4>
+                                <p>Paper, plastic, glass, metal</p>
+                            </div>
+                            <div class="waste-type-card" data-type="Hazardous">
+                                <i class="fas fa-radiation waste-icon"></i>
+                                <h4>Hazardous</h4>
+                                <p>Chemicals, batteries, toxic materials</p>
+                            </div>
+                        </div>
+                        <input type="hidden" id="wasteType" name="wasteType" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pickup-date">Preferred Pickup Date</label>
+                            <input type="date" id="pickup-date" name="preferredDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pickup-time">Preferred Time</label>
+                            <select id="pickup-time" name="preferredTime">
+                                <option value="Morning">Morning (8 AM - 12 PM)</option>
+                                <option value="Afternoon">Afternoon (12 PM - 4 PM)</option>
+                                <option value="Evening">Evening (4 PM - 8 PM)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                  
+
+                    <div class="form-group">
+                        <label for="pickup-address">Pickup Address</label>
+                        <textarea id="pickup-address" name="pickupAddress" rows="2" required>123 Main Street, Green City, GC 12345</textarea>
+                        <small>Your registered address. Contact support to update.</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">Submit Pickup Request</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Pickup Guidelines</h3>
+                </div>
+                <div class="form-group">
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-info-circle" style="color: var(--primary);"></i>
+                            <span>Place waste in designated containers before pickup time</span>
+                        </li>
+                        <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-info-circle" style="color: var(--primary);"></i>
+                            <span>Separate different waste types if possible</span>
+                        </li>
+                        <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-info-circle" style="color: var(--primary);"></i>
+                            <span>Ensure access to the pickup location</span>
+                        </li>
+                        <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-info-circle" style="color: var(--primary);"></i>
+                            <span>Requests are typically processed within 24 hours</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <i class="fas fa-recycle"></i>
+                <h2>WasteWise</h2>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 WasteWise. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Waste type selection
+        document.querySelectorAll('.waste-type-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.waste-type-card').forEach(c => {
+                    c.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                document.getElementById('wasteType').value = this.getAttribute('data-type');
+            });
+        });
+
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('pickup-date').min = today;
+
+        // Dropdown functionality
+        document.querySelector('.dropdown-toggle').addEventListener('click', function() {
+            document.querySelector('.dropdown-content').classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(e) {
+            if (!e.target.matches('.dropdown-toggle')) {
+                const dropdowns = document.querySelectorAll('.dropdown-content');
+                dropdowns.forEach(dropdown => {
+                    if (dropdown.classList.contains('show')) {
+                        dropdown.classList.remove('show');
+                    }
+                });
+            }
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const wasteType = document.getElementById('wasteType').value;
+            if (!wasteType) {
+                e.preventDefault();
+                alert('Please select a waste type');
+                return;
+            }
+            // Form will submit to backend
+        });
+    </script>
+</body>
+</html>

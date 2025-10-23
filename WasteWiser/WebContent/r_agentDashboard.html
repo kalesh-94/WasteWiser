@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Agent Dashboard - WasteWise</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --primary: #2e7d32;
+    --primary-light: #4caf50;
+    --primary-dark: #1b5e20;
+    --secondary: #ff9800;
+    --accent: #009688;
+    --text: #333333;
+    --background: #f5f5f5;
+    --card-bg: #ffffff;
+    --error: #f44336;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.header {
+    background-color: var(--primary);
+    color: white;
+    padding: 1rem 0;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    border-radius: 8px;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo i {
+    font-size: 2rem;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: var(--primary-dark);
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.dashboard-stats {
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    border-left: 4px solid var(--primary);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.dashboard-actions {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.action-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+}
+
+.action-card-header {
+    background-color: var(--primary);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.action-card-header i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.action-card-header h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.action-card-body {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.action-card-body p {
+    margin-bottom: 1.5rem;
+    color: var(--text);
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 1rem;
+    color: var(--text);
+    border-top: 1px solid #ddd;
+}
+</style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-recycle"></i>
+                <h1>WasteWise</h1>
+            </div>
+            <div class="nav-links">
+                <a href="r_agentDashboard.html">Dashboard</a>
+                <a href="viewAssignedPickups.jsp">My Pickups</a>
+                
+                <a href="w_changePassAgent.jsp">Change Password</a>
+                <a href="index.html">Logout</a>
+                  <a href="t_agentProfile.jsp"><i class="fas fa-user"></i> Profile</a>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="page-title">Agent Dashboard</h1>
+
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <div class="stat-number" id="assignedCount">0</div>
+            <div class="stat-label">Assigned Pickups</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="completedCount">0</div>
+            <div class="stat-label">Completed Today</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="pendingCount">0</div>
+            <div class="stat-label">Pending Pickups</div>
+        </div>
+    </div>
+
+    <div class="dashboard-actions">
+        <div class="action-card">
+            <div class="action-card-header">
+                <i class="fas fa-tasks"></i>
+                <h3>View Assigned Pickups</h3>
+            </div>
+            <div class="action-card-body">
+                <p>View all pickup requests assigned to you and their current status</p>
+                <a href="s_agentViewAssignedPickups.jsp" class="btn btn-primary">View Pickups</a>
+            </div>
+        </div>
+
+        
+
+        <div class="action-card">
+            <div class="action-card-header">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>Daily Schedule</h3>
+            </div>
+            <div class="action-card-body">
+                <p>View your schedule and upcoming pickup assignments</p>
+                <a href="t_agentProfile.jsp" class="btn btn-primary">View Schedule</a>
+            </div>
+        </div>
+
+        <div class="action-card">
+            <div class="action-card-header">
+                <i class="fas fa-key"></i>
+                <h3>Change Password</h3>
+            </div>
+            <div class="action-card-body">
+                <p>Update your account password for security</p>
+                <a href="w_changePassAgent.jsp" class="btn btn-primary">Change Password</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 WasteWise. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Simulate loading stats (in real application, this would come from server)
+        document.getElementById('assignedCount').textContent = '5';
+        document.getElementById('completedCount').textContent = '3';
+        document.getElementById('pendingCount').textContent = '2';
+    </script>
+</body>
+</html>

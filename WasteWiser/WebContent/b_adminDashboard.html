@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - WasteWise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #4caf50;
+            --primary-dark: #1b5e20;
+            --secondary: #ff9800;
+            --secondary-light: #ffb74d;
+            --secondary-dark: #f57c00;
+            --accent: #009688;
+            --text: #333333;
+            --text-light: #666666;
+            --background: #f5f5f5;
+            --card-bg: #ffffff;
+            --error: #f44336;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --info: #2196f3;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .dropdown-content a {
+            color: var(--text);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        /* Rest of your CSS remains the same */
+        /* Button Styles */
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+            min-height: calc(100vh - 140px);
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .card-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-assigned {
+            background-color: #cce7ff;
+            color: #004085;
+        }
+
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-delayed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Performance List */
+        .performance-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .performance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: var(--radius);
+        }
+
+        .agent-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .agent-avatar {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .agent-details h4 {
+            margin-bottom: 0.2rem;
+            color: var(--primary);
+        }
+
+        .agent-details p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .performance-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat .value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat .label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* Alerts */
+        .alerts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning);
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            border-left: 4px solid var(--info);
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border-left: 4px solid var(--success);
+        }
+
+        .alert-item i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .alert-warning i {
+            color: var(--warning);
+        }
+
+        .alert-info i {
+            color: var(--info);
+        }
+
+        .alert-success i {
+            color: var(--success);
+        }
+
+        .alert-content h4 {
+            margin-bottom: 0.3rem;
+            color: var(--text);
+        }
+
+        .alert-content p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo i {
+            font-size: 2rem;
+        }
+
+        .footer-logo h2 {
+            font-size: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary-light);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-row {
+                grid-template-columns: 1fr;
+            }
+
+            .performance-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .performance-stats {
+                align-self: stretch;
+                justify-content: space-around;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-recycle"></i>
+                        <h1>WasteWise</h1>
+                    </a>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="b_adminDashboard.html" class="active">Dashboard</a></li>
+                        <li><a href="i_adminviewAgents.jsp">Agents</a></li>
+                        <li><a href="o_adminViewRequest.jsp">Requests</a></li>
+                        <li><a href="k_viewcitizens.jsp">Citizens</a></li>
+                        <li><a href="reports.html">Reports</a></li>
+                    </ul>
+                </nav>
+                <div class="user-menu">
+                    <span>Welcome, Admin</span>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">
+                            <i class="fas fa-user-cog"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="m_adminProfile.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="#"><i class="fas fa-key"></i> Change Password</a>
+                            <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h2>Admin Dashboard</h2>
+                <div class="header-actions">
+                    <a href="q_adminAssignAgents.jsp" class="btn btn-primary">Manage Requests & Assign Agents</a>
+                    <a href="h_addAgents.html" class="btn btn-outline">Add Agent</a>
+                    <a href="i_adminviewAgents.jsp" class="btn btn-outline">View Agents</a>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-users stat-icon"></i>
+                    <div class="stat-value">5,247</div>
+                    <div class="stat-label">Total Citizens</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-truck stat-icon"></i>
+                    <div class="stat-value">142</div>
+                    <div class="stat-label">Active Agents</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock stat-icon"></i>
+                    <div class="stat-value">87</div>
+                    <div class="stat-label">Pending Requests</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-chart-line stat-icon"></i>
+                    <div class="stat-value">94%</div>
+                    <div class="stat-label">Completion Rate</div>
+                </div>
+            </div>
+			
+			<!-- info to fill----------->
+
+
+		<div class="card"
+			style="border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); padding: 20px; background-color: #fff;">
+			<div class="card-header"
+				style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+				<h3 class="card-title" style="font-size: 18px; font-weight: 600;">Pickup
+					Statistics Overview</h3>
+				<a href="o_adminViewRequest.jsp" class="btn btn-outline"
+					style="padding: 6px 12px; border: 1px solid #007bff; border-radius: 5px; color: #007bff; text-decoration: none;">View
+					Details</a>
+			</div>
+
+			<div class="card-body"
+				style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+				<div
+					style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;">
+					<h4 style="margin: 0; color: #28a745;">128</h4>
+					<p style="margin: 5px 0 0; color: #555;">Completed Pickups</p>
+				</div>
+				<div
+					style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;">
+					<h4 style="margin: 0; color: #ffc107;">34</h4>
+					<p style="margin: 5px 0 0; color: #555;">Pending Requests</p>
+				</div>
+				<div
+					style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;">
+					<h4 style="margin: 0; color: #17a2b8;">22</h4>
+					<p style="margin: 5px 0 0; color: #555;">Active Agents</p>
+				</div>
+				<div
+					style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;">
+					<h4 style="margin: 0; color: #dc3545;">5</h4>
+					<p style="margin: 5px 0 0; color: #555;">Delayed Pickups</p>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+		<div class="card-row">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Agent Performance</h3>
+                    </div>
+                    <div class="performance-list">
+                        <div class="performance-item">
+                            <div class="agent-info">
+                                <div class="agent-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="agent-details">
+                                    <h4>Mike Johnson</h4>
+                                    <p>North Zone</p>
+                                </div>
+                            </div>
+                            <div class="performance-stats">
+                                <div class="stat">
+                                    <span class="value">42</span>
+                                    <span class="label">This Week</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="value">98%</span>
+                                    <span class="label">Rate</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="agent-info">
+                                <div class="agent-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="agent-details">
+                                    <h4>Sarah Williams</h4>
+                                    <p>South Zone</p>
+                                </div>
+                            </div>
+                            <div class="performance-stats">
+                                <div class="stat">
+                                    <span class="value">38</span>
+                                    <span class="label">This Week</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="value">96%</span>
+                                    <span class="label">Rate</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="agent-info">
+                                <div class="agent-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="agent-details">
+                                    <h4>David Miller</h4>
+                                    <p>East Zone</p>
+                                </div>
+                            </div>
+                            <div class="performance-stats">
+                                <div class="stat">
+                                    <span class="value">35</span>
+                                    <span class="label">This Week</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="value">92%</span>
+                                    <span class="label">Rate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">System Alerts</h3>
+                    </div>
+                    <div class="alerts-list">
+                        <div class="alert-item alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="alert-content">
+                                <h4>High pending requests in North Zone</h4>
+                                <p>15 requests waiting for assignment</p>
+                            </div>
+                        </div>
+                        <div class="alert-item alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <div class="alert-content">
+                                <h4>Agent performance review</h4>
+                                <p>Monthly review due in 3 days</p>
+                            </div>
+                        </div>
+                        <div class="alert-item alert-success">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="alert-content">
+                                <h4>System backup completed</h4>
+                                <p>Last backup: Today, 02:00 AM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-recycle"></i>
+                    <h2>WasteWise</h2>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="i_adminviewAgents.jsp">Manage Agents</a></li>
+                            <li><a href="o_adminViewRequest.jsp">Manage Requests</a></li>
+                            <li><a href="#">Reports</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Support</h3>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">System Status</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 WasteWise. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dropdown functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownToggle = document.querySelector('.dropdown-toggle');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            
+            if (dropdownToggle && dropdownContent) {
+                dropdownToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdownContent.classList.toggle('show');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!dropdownToggle.contains(e.target) && !dropdownContent.contains(e.target)) {
+                        dropdownContent.classList.remove('show');
+                    }
+                });
+
+                // Close dropdown when clicking on a dropdown item
+                const dropdownItems = dropdownContent.querySelectorAll('a');
+                dropdownItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        dropdownContent.classList.remove('show');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
