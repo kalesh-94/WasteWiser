@@ -200,28 +200,33 @@ http://localhost:8080/WasteWiser
 ---
 
 ## 📸 Screenshots
+demo images.
 
-Create a `screenshots/` folder and add your demo images.
+<img width="1896" height="909" alt="image" src="https://github.com/user-attachments/assets/9a3dee2d-3dd0-4ba2-bd5b-ec875a24e785" />
+<img width="1871" height="905" alt="image" src="https://github.com/user-attachments/assets/818a07c9-bd58-447a-af8a-51a406291d99" />
+<img width="1881" height="905" alt="image" src="https://github.com/user-attachments/assets/027f1275-ccf0-4f7e-b82c-c2aeab185e37" />
+<img width="1894" height="881" alt="image" src="https://github.com/user-attachments/assets/4a5cd72b-1f60-412d-99ac-524e2fed5265" />
+<img width="1828" height="904" alt="image" src="https://github.com/user-attachments/assets/a380fff0-9c2b-46a8-b04e-6caa48c44153" />
+<img width="1891" height="881" alt="image" src="https://github.com/user-attachments/assets/90dde7cc-1911-48c7-a2fa-254dcbf72aac" />
+<img width="1881" height="879" alt="image" src="https://github.com/user-attachments/assets/623c85a6-f31e-43ef-87a3-4996d5c073eb" />
+<img width="1894" height="906" alt="image" src="https://github.com/user-attachments/assets/102a5777-cee4-4464-9c46-a5c074d3e453" />
+<img width="1900" height="897" alt="image" src="https://github.com/user-attachments/assets/ec01f4bf-5a24-4ef1-a44d-514e31a184e6" />
+<img width="1842" height="902" alt="image" src="https://github.com/user-attachments/assets/cbc15422-1764-47e5-b3f1-79503fb29f59" />
+<img width="1846" height="905" alt="image" src="https://github.com/user-attachments/assets/244e0b91-8b57-4234-8221-a9a3d9e17dcf" />
+<img width="1892" height="897" alt="image" src="https://github.com/user-attachments/assets/d7aa339e-5216-43fb-9c7b-5852a5a33730" />
+<img width="1873" height="896" alt="image" src="https://github.com/user-attachments/assets/a46c8038-f0f8-440e-8fd9-df172f2f3e8b" />
+<img width="1894" height="905" alt="image" src="https://github.com/user-attachments/assets/ab65e036-8323-4ed2-b2f5-724ba019ee5c" />
 
-Example:
 
-```
-## Screenshots
 
-### 🏠 Home Page
-![Home](./screenshots/home.png)
 
-### 🙋 Citizen Request Page
-![Citizen Request](./screenshots/request.png)
 
-### 🛠️ Admin Dashboard
-![Admin](./screenshots/admin_dashboard.png)
 
-### 🚛 Agent Panel
-![Agent](./screenshots/agent_panel.png)
-```
 
----
+
+
+
+
 
 
 ---
@@ -244,4 +249,3 @@ Kalesh Patil.
 
 
 
-<img width="1896" height="909" alt="image" src="https://github.com/user-attachments/assets/9a3dee2d-3dd0-4ba2-bd5b-ec875a24e785" />
