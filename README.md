@@ -233,6 +233,8 @@ demo images.
 
 
 ---
+Thank you for checking out WasteWiser ♻️
+If you liked ❤️ this project, please consider giving the repository a ⭐
 
 ## 📜 License
 Kalesh Patil.
