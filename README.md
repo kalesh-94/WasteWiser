@@ -81,7 +81,6 @@ WasteWiser/
 │   ├── f_agentLogin.html
 │   ├── g_agentRegister.html
 │   ├── h_addAgents.html
-│
 │   ├── i_adminviewAgents.jsp
 │   ├── j_agentDelete.jsp
 │   ├── k_viewcitizens.jsp
